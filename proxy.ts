@@ -1,3 +1,4 @@
+import { intlayerProxy } from 'next-intlayer/proxy'
 import { NextResponse } from 'next/server'
 import { auth } from './auth'
 import {
@@ -10,7 +11,7 @@ import {
 } from './lib/auth/routes'
 import { handleRefreshTokenBeforeExpire } from './lib/auth/serverHelper'
 
-const proxy = auth(async (req) => {
+export default auth(async (req) => {
   const { nextUrl } = req
   const isLoggedIn = !!req.auth
 
@@ -29,8 +30,7 @@ const proxy = auth(async (req) => {
     if (isLoggedIn) {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl))
     }
-
-    return NextResponse.next()
+    return intlayerProxy(req)
   }
 
   if (!isLoggedIn && !isPublicRoute) {
@@ -41,11 +41,9 @@ const proxy = auth(async (req) => {
     return await handleRefreshTokenBeforeExpire(req)
   }
 
-  return NextResponse.next()
+  return intlayerProxy(req)
 })
 
 export const config = {
   matcher: ['/((?!.+\\.[\\w]+$|_next).*)', '/', '/(api|trpc)(.*)'],
 }
-
-export default proxy

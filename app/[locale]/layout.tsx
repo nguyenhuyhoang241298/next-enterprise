@@ -23,15 +23,14 @@ export { generateStaticParams } from 'next-intlayer'
 const LocaleLayout: NextLayoutIntlayer = async ({ children, params }) => {
   const { locale } = await params
   return (
-    <html lang={locale} dir={getHTMLTextDir(locale)} className={inter.variable}>
+    <html lang={locale} dir={getHTMLTextDir(locale)} suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ReactQueryProvider>
           <SessionProvider>
             <ThemeProvider
               attribute="class"
-              defaultTheme="dark"
               enableSystem
               disableTransitionOnChange
             >

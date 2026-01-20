@@ -5,7 +5,6 @@ export const env = createEnv({
   server: {
     AUTH_SECRET: z.string().min(1),
     AUTH_URL: z.string(),
-    AUTH_TRUST_HOST: z.string(),
     API_ENDPOINT: z.string(),
   },
 
