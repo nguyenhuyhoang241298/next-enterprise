@@ -103,7 +103,7 @@ export const ShouldOpenPopover: Story = {
       const dateButtons = await canvas.findAllByRole('button', {
         name: /1st/i,
       })
-      await userEvent.click(dateButtons[0])
+      await userEvent.click(dateButtons[0]!)
     })
   },
 }
@@ -302,7 +302,7 @@ export const WithDateTime: Story = {
               const [hours, minutes, seconds] = e.target.value
                 .split(':')
                 .map(Number)
-              date.setHours(hours, minutes, seconds)
+              date.setHours(hours!, minutes, seconds)
               setDate(date)
               action('time selected')(date)
             }}
@@ -332,7 +332,7 @@ export const ShouldOpenCalendar: Story = {
     })
 
     const dateButtons = await canvas.findAllByRole('button', { name: /1st/i })
-    await userEvent.click(dateButtons[0])
+    await userEvent.click(dateButtons[0]!)
 
     await step('type a time', async () => {
       const timeInput = await canvas.findByLabelText('Time')

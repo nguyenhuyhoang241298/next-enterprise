@@ -1,21 +1,21 @@
-import { expect, userEvent, waitFor } from "storybook/test";
+import { expect, userEvent, waitFor } from 'storybook/test'
 // Replace nextjs-vite with the name of your framework
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 /**
  * A set of layered sections of content—known as tab panels—that are displayed
  * one at a time.
  */
 const meta = {
-  title: "ui/Tabs",
+  title: 'ui/Tabs',
   component: Tabs,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {},
   args: {
-    defaultValue: "account",
-    className: "w-96",
+    defaultValue: 'account',
+    className: 'w-96',
   },
   render: (args) => (
     <Tabs {...args}>
@@ -30,46 +30,48 @@ const meta = {
     </Tabs>
   ),
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-} satisfies Meta<typeof Tabs>;
+} satisfies Meta<typeof Tabs>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 /**
  * The default form of the tabs.
  */
-export const Default: Story = {};
+export const Default: Story = {}
 
 export const ShouldChangeTabs: Story = {
-  name: "when clicking a tab, should change the content",
-  tags: ["!dev", "!autodocs"],
+  name: 'when clicking a tab, should change the content',
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvas, step }) => {
-    const tabs = await canvas.findAllByRole("tab");
+    const tabs = await canvas.findAllByRole('tab')
 
     for (let i = 0; i < tabs.length; i++) {
-      await step(`click the '${tabs[i].innerText}' tab`, async () => {
-        await userEvent.click(tabs[i]);
+      await step(`click the '${tabs[i]!.innerText}' tab`, async () => {
+        await userEvent.click(tabs[i]!)
         await waitFor(() =>
-          expect(tabs[i]).toHaveAttribute("aria-selected", "true"),
-        );
+          expect(tabs[i]).toHaveAttribute('aria-selected', 'true'),
+        )
         await expect(
-          await canvas.queryByRole("tabpanel", { name: tabs[i].innerText }),
-        ).toBeVisible();
-      });
+          await canvas.queryByRole('tabpanel', { name: tabs[i]!.innerText }),
+        ).toBeVisible()
+      })
 
-      await step("check other tabs are not selected", async () => {
+      await step('check other tabs are not selected', async () => {
         for (let j = 0; j < tabs.length; j++) {
           if (j !== i) {
-            expect(tabs[j]).toHaveAttribute("aria-selected", "false");
+            expect(tabs[j]).toHaveAttribute('aria-selected', 'false')
             expect(
-              await canvas.queryByRole("tabpanel", { name: tabs[j].innerText }),
-            ).toBeNull();
+              await canvas.queryByRole('tabpanel', {
+                name: tabs[j]!.innerText,
+              }),
+            ).toBeNull()
           }
         }
-      });
+      })
     }
   },
-};
+}

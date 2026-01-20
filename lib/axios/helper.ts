@@ -15,6 +15,11 @@ export const mappingServerCookies = ({
 export const parseSetCookie = (setCookieHeader: string) => {
   const parts = setCookieHeader.split(';').map((part) => part.trim())
   const [nameValue] = parts
+
+  if (!nameValue) {
+    throw new Error('Invalid Set-Cookie header')
+  }
+
   const [name, value] = nameValue.split('=')
 
   const options: {
@@ -28,13 +33,17 @@ export const parseSetCookie = (setCookieHeader: string) => {
 
   parts.slice(1).forEach((part) => {
     const [key, val] = part.split('=')
+
+    if (!key) return
+
     const lowerKey = key.toLowerCase()
 
     if (lowerKey === 'httponly') options.httpOnly = true
     else if (lowerKey === 'secure') options.secure = true
     else if (lowerKey === 'samesite')
       options.sameSite = val?.toLowerCase() as any
-    else if (lowerKey === 'max-age') options.maxAge = parseInt(val)
+    else if (lowerKey === 'max-age' && val)
+      options.maxAge = Number.parseInt(val)
     else if (lowerKey === 'path') options.path = val
     else if (lowerKey === 'domain') options.domain = val
   })

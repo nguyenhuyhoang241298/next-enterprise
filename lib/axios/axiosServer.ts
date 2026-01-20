@@ -93,6 +93,8 @@ axiosServer.interceptors.response.use(
           for (const setCookieHeader of setCookieHeaders) {
             const { name, value, options } = parseSetCookie(setCookieHeader)
 
+            if (!name || !value) continue
+
             // Set cookie vào Next.js
             cookieStore.set(name, value, options)
 

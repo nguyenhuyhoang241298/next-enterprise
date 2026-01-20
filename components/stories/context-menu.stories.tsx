@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 
 import {
   ContextMenu,
@@ -14,17 +14,17 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from "@/components/ui/context-menu";
-import { expect, userEvent, within } from "storybook/test";
+} from '@/components/ui/context-menu'
+import { expect, userEvent, within } from 'storybook/test'
 
 /**
  * Displays a menu to the user — such as a set of actions or functions —
  * triggered by a button.
  */
 const meta = {
-  title: "ui/ContextMenu",
+  title: 'ui/ContextMenu',
   component: ContextMenu,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {},
   args: {},
   render: (args) => (
@@ -41,18 +41,18 @@ const meta = {
     </ContextMenu>
   ),
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-} satisfies Meta<typeof ContextMenu>;
+} satisfies Meta<typeof ContextMenu>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 /**
  * The default form of the context menu.
  */
-export const Default: Story = {};
+export const Default: Story = {}
 
 /**
  * A context menu with shortcuts.
@@ -79,7 +79,7 @@ export const WithShortcuts: Story = {
       </ContextMenuContent>
     </ContextMenu>
   ),
-};
+}
 
 /**
  * A context menu with a submenu.
@@ -111,7 +111,7 @@ export const WithSubmenu: Story = {
       </ContextMenuContent>
     </ContextMenu>
   ),
-};
+}
 
 /**
  * A context menu with checkboxes.
@@ -131,7 +131,7 @@ export const WithCheckboxes: Story = {
       </ContextMenuContent>
     </ContextMenu>
   ),
-};
+}
 
 /**
  * A context menu with a radio group.
@@ -151,30 +151,30 @@ export const WithRadioGroup: Story = {
       </ContextMenuContent>
     </ContextMenu>
   ),
-};
+}
 
 export const ShouldOpenClose: Story = {
-  name: "when right-clicking the trigger area, the menu appears and can be interacted with",
-  tags: ["!dev", "!autodocs"],
+  name: 'when right-clicking the trigger area, the menu appears and can be interacted with',
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, canvas, step }) => {
-    const canvasBody = within(canvasElement.ownerDocument.body);
+    const canvasBody = within(canvasElement.ownerDocument.body)
 
-    step("Right-click on the trigger area", async () => {
+    step('Right-click on the trigger area', async () => {
       await userEvent.pointer({
-        keys: "[MouseRight>]",
+        keys: '[MouseRight>]',
         target: await canvas.findByText(/click here/i),
         coords: {
           x: canvasElement.clientWidth / 2,
           y: canvasElement.clientHeight / 2,
         },
-      });
-    });
-    expect(await canvasBody.findByRole("menu")).toBeInTheDocument();
-    const items = await canvasBody.findAllByRole("menuitem");
-    expect(items).toHaveLength(4);
+      })
+    })
+    expect(await canvasBody.findByRole('menu')).toBeInTheDocument()
+    const items = await canvasBody.findAllByRole('menuitem')
+    expect(items).toHaveLength(4)
 
-    step("Click the first menu item", async () => {
-      await userEvent.click(items[0], { delay: 100 });
-    });
+    step('Click the first menu item', async () => {
+      await userEvent.click(items[0]!, { delay: 100 })
+    })
   },
-};
+}

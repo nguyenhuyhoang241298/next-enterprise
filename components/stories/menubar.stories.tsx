@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 
 import {
   Menubar,
@@ -16,17 +16,17 @@ import {
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarTrigger,
-} from "@/components/ui/menubar";
-import { expect, userEvent, within } from "storybook/test";
+} from '@/components/ui/menubar'
+import { expect, userEvent, within } from 'storybook/test'
 
 /**
  * A visually persistent menu common in desktop applications that provides
  * quick access to a consistent set of commands.
  */
 const meta = {
-  title: "ui/Menubar",
+  title: 'ui/Menubar',
   component: Menubar,
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {},
 
   render: (args) => (
@@ -47,18 +47,18 @@ const meta = {
     </Menubar>
   ),
   parameters: {
-    layout: "centered",
+    layout: 'centered',
   },
-} satisfies Meta<typeof Menubar>;
+} satisfies Meta<typeof Menubar>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 /**
  * The default form of the menubar.
  */
-export const Default: Story = {};
+export const Default: Story = {}
 
 /**
  * A menubar with a submenu.
@@ -82,7 +82,7 @@ export const WithSubmenu: Story = {
       </MenubarMenu>
     </Menubar>
   ),
-};
+}
 
 /**
  * A menubar with radio items.
@@ -103,7 +103,7 @@ export const WithRadioItems: Story = {
       </MenubarMenu>
     </Menubar>
   ),
-};
+}
 
 /**
  * A menubar with checkbox items.
@@ -124,26 +124,26 @@ export const WithCheckboxItems: Story = {
       </MenubarMenu>
     </Menubar>
   ),
-};
+}
 
 export const ShouldOpenClose: Story = {
-  name: "when clicking an item, should close the menubar",
-  tags: ["!dev", "!autodocs"],
+  name: 'when clicking an item, should close the menubar',
+  tags: ['!dev', '!autodocs'],
   play: async ({ canvasElement, step }) => {
-    const canvasBody = within(canvasElement.ownerDocument.body);
+    const canvasBody = within(canvasElement.ownerDocument.body)
 
-    await step("open the menubar", async () => {
+    await step('open the menubar', async () => {
       await userEvent.click(
-        await canvasBody.findByRole("menuitem", { name: /file/i }),
-      );
-      expect(await canvasBody.findByRole("menu")).toBeInTheDocument();
-    });
+        await canvasBody.findByRole('menuitem', { name: /file/i }),
+      )
+      expect(await canvasBody.findByRole('menu')).toBeInTheDocument()
+    })
 
-    const items = await canvasBody.findAllByRole("menuitem");
-    expect(items).toHaveLength(5);
+    const items = await canvasBody.findAllByRole('menuitem')
+    expect(items).toHaveLength(5)
 
-    await step("click the first item to close the menubar", async () => {
-      await userEvent.click(items[0], { delay: 100 });
-    });
+    await step('click the first item to close the menubar', async () => {
+      await userEvent.click(items[0]!, { delay: 100 })
+    })
   },
-};
+}

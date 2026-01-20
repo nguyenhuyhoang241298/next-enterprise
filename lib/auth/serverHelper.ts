@@ -46,6 +46,8 @@ export const handleRefreshTokenBeforeExpire = async (
       for (const setCookieHeader of setCookieHeaders) {
         const { name, value, options } = parseSetCookie(setCookieHeader)
 
+        if (!name || !value) continue
+
         nextResponse.cookies.set(name, value, options)
       }
     }
