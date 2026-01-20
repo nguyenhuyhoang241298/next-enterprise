@@ -1,6 +1,10 @@
+import ReactQueryProvider from '@/components/providers/react-query-provider'
+import SessionProvider from '@/components/providers/session-provider'
+import { ThemeProvider } from '@/components/providers/theme-provider'
 import { getHTMLTextDir } from 'intlayer'
 import { IntlayerClientProvider, type NextLayoutIntlayer } from 'next-intlayer'
 import { Geist, Geist_Mono, Inter } from 'next/font/google'
+import { Toaster } from 'sonner'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
 
@@ -23,9 +27,21 @@ const LocaleLayout: NextLayoutIntlayer = async ({ children, params }) => {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <IntlayerClientProvider locale={locale}>
-          {children}
-        </IntlayerClientProvider>
+        <ReactQueryProvider>
+          <SessionProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <IntlayerClientProvider locale={locale}>
+                {children}
+                <Toaster />
+              </IntlayerClientProvider>
+            </ThemeProvider>
+          </SessionProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   )
