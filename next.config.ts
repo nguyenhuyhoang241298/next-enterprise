@@ -2,7 +2,13 @@ import type { NextConfig } from 'next'
 import { withIntlayer } from 'next-intlayer/server'
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    optimizePackageImports: [
+      '@hugeicons-pro/core-solid-rounded',
+      '@hugeicons-pro/core-stroke-rounded',
+      '@hugeicons/core-free-icons',
+    ],
+  },
 }
 
 export default withIntlayer(nextConfig)
